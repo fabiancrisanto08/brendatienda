@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Famavaya | Catálogo de Productos Premium</title>
+  <meta name="description" content="Explora el catálogo completo de Famavaya. Productos y suministros al mejor precio con cotización directa por WhatsApp.">
+
+  <!-- Favicon -->
+  <link rel="icon" href="img/famavaya_icono.jpg" type="image/jpeg">
+
+  <!-- Estilos CSS -->
+  <link rel="stylesheet" href="styles.css">
+  
+  <!-- Iconos Lucide -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- GSAP y Plugins -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+  <!-- Resplandor del Cursor -->
+  <div class="cursor-glow" id="cursorGlow"></div>
+
+  <!-- Canvas para Fondo Dinámico Animado -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- ENCABEZADO / HEADER -->
+  <header class="header">
+    <div class="header-container">
+      
+      <a href="index.html" class="brand">
+        <img src="img/famavaya_icono.jpg" alt="Icono Famavaya" class="brand-icon-img">
+        <span class="brand-name">Famavaya</span>
+      </a>
+
+      <nav class="navbar" id="navbar">
+        <ul class="nav-list">
+          <li><a href="index.html" class="nav-link">Inicio</a></li>
+          <li><a href="catalogo.html" class="nav-link active">Catálogo</a></li>
+          <li><a href="index.html#nosotros" class="nav-link">Nosotros</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <form class="search-form" id="searchForm">
+          <input 
+            type="text" 
+            class="search-input" 
+            id="searchInput" 
+            placeholder="Buscar productos..."
+            aria-label="Buscar productos"
+          >
+          <button type="submit" class="search-btn" aria-label="Buscar">
+            <i data-lucide="search" class="icon-lg"></i>
+          </button>
+        </form>
+
+        <a 
+          href="https://wa.me/51981144383?text=Hola,%20quisiera%20pedir%20información%20general%20sobre%20los%20productos%20Famavaya." 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="wsp-btn shiny-btn"
+        >
+          <i data-lucide="message-circle" class="icon-lg"></i>
+          <span>WhatsApp</span>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- CONTENIDO PRINCIPAL TIENDA -->
+  <main class="store-section">
+    <div class="container store-container">
+      
+      <!-- Breadcrumbs -->
+      <nav class="breadcrumbs">
+        <a href="index.html">Inicio</a>
+        <span class="separator">/</span>
+        <span class="current">Catálogo</span>
+      </nav>
+
+      <!-- Header del Catálogo -->
+      <header class="store-header">
+        <h1 class="store-title" id="heroTitle">Catálogo de Productos</h1>
+        <p class="store-subtitle">Precios con IGV incluido. Cotización instantánea vía WhatsApp.</p>
+      </header>
+
+      <!-- Layout: Sidebar + Galería -->
+      <div class="store-layout">
+        
+        <!-- SIDEBAR DE FILTROS -->
+        <aside class="store-sidebar">
+          <div class="filter-group">
+            <h3 class="filter-title">Categorías</h3>
+            <ul class="category-list">
+              <li>
+                <label class="custom-checkbox">
+                  <input type="checkbox" value="electricos" class="category-checkbox"> Accesorios eléctricos
+                </label>
+                <span class="cat-count">1</span>
+              </li>
+              <li>
+                <label class="custom-checkbox">
+                  <input type="checkbox" value="seguridad" class="category-checkbox"> Artículos de seguridad
+                </label>
+                <span class="cat-count">1</span>
+              </li>
+              <li>
+                <label class="custom-checkbox">
+                  <input type="checkbox" value="iluminacion" class="category-checkbox"> Iluminación LED
+                </label>
+                <span class="cat-count">2</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="filter-group">
+            <h3 class="filter-title">Precio (S/)</h3>
+            <div class="price-inputs">
+              <input type="number" id="minPrice" placeholder="Mín" class="price-input">
+              <span class="dash">—</span>
+              <input type="number" id="maxPrice" placeholder="Máx" class="price-input">
+            </div>
+            <button class="btn-sidebar btn-apply" id="applyFiltersBtn">Aplicar</button>
+            <button class="btn-sidebar btn-clear" id="clearFiltersBtn">Limpiar filtros</button>
+          </div>
+        </aside>
+
+        <!-- ÁREA DE PRODUCTOS -->
+        <div class="store-content">
+          
+          <div class="store-top-bar">
+            <span class="products-count" id="productsCount">Mostrando productos</span>
+            <select class="sort-select" id="sortSelect">
+              <option value="default">Ordenar: Relevancia</option>
+              <option value="low-high">Precio: Menor a Mayor</option>
+              <option value="high-low">Precio: Mayor a Menor</option>
+            </select>
+          </div>
+
+          <!-- GRID DE PRODUCTOS -->
+          <div class="catalog-grid" id="productsGrid">
+            
+            <!-- Item 1 -->
+            <article class="catalog-card" data-category="electricos" data-price="235.00">
+              <div class="card-thumb">
+                <span class="badge-discount">-13%</span>
+                <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=500&q=80" alt="Cable TW80">
+              </div>
+              <div class="card-details">
+                <span class="product-cat">Accesorios eléctricos</span>
+                <h3 class="card-title">Cable TW80 Plus #12 Indeco</h3>
+                <div class="card-price-row">
+                  <span class="price-val">S/ 235.00</span>
+                  <span class="igv-tag">inc. IGV</span>
+                </div>
+                <div class="card-meta">
+                  <span class="stock-status">✓ En stock</span>
+                  <span class="sku-tag">#12</span>
+                </div>
+                <a href="https://wa.me/51981144383?text=Hola,%20deseo%20cotizar:%20Cable%20TW80%20Plus" target="_blank" class="wsp-catalog-btn shiny-btn">
+                  <i data-lucide="message-circle"></i>
+                  <span>Cotizar por WhatsApp</span>
+                </a>
+              </div>
+            </article>
+
+            <!-- Item 2 -->
+            <article class="catalog-card" data-category="seguridad" data-price="10.00">
+              <div class="card-thumb">
+                <img src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=500&q=80" alt="Cinta antideslizante">
+              </div>
+              <div class="card-details">
+                <span class="product-cat">Artículos de seguridad</span>
+                <h3 class="card-title">Cinta antideslizante bicolor</h3>
+                <div class="card-price-row">
+                  <span class="price-val">S/ 10.00</span>
+                  <span class="igv-tag">inc. IGV</span>
+                </div>
+                <div class="card-meta">
+                  <span class="stock-status">✓ En stock</span>
+                </div>
+                <a href="https://wa.me/51981144383?text=Hola,%20deseo%20cotizar:%20Cinta%20antideslizante" target="_blank" class="wsp-catalog-btn shiny-btn">
+                  <i data-lucide="message-circle"></i>
+                  <span>Cotizar por WhatsApp</span>
+                </a>
+              </div>
+            </article>
+
+            <!-- Item 3 -->
+            <article class="catalog-card" data-category="iluminacion" data-price="12.00">
+              <div class="card-thumb">
+                <img src="https://images.unsplash.com/photo-1550985616-10810253b84d?auto=format&fit=crop&w=500&q=80" alt="Dicroico c/base">
+              </div>
+              <div class="card-details">
+                <span class="product-cat">Iluminación LED</span>
+                <h3 class="card-title">Dicroico c/base L3110 7W 220V</h3>
+                <div class="card-price-row">
+                  <span class="price-val">S/ 12.00</span>
+                  <span class="igv-tag">inc. IGV</span>
+                </div>
+                <div class="card-meta">
+                  <span class="stock-status">✓ En stock</span>
+                  <span class="sku-tag">7W · 220V</span>
+                </div>
+                <a href="https://wa.me/51981144383?text=Hola,%20deseo%20cotizar:%20Dicroico%20L3110" target="_blank" class="wsp-catalog-btn shiny-btn">
+                  <i data-lucide="message-circle"></i>
+                  <span>Cotizar por WhatsApp</span>
+                </a>
+              </div>
+            </article>
+
+            <!-- Item 4 -->
+            <article class="catalog-card" data-category="iluminacion" data-price="12.00">
+              <div class="card-thumb">
+                <img src="https://images.unsplash.com/photo-1507499739999-097706ad8914?auto=format&fit=crop&w=500&q=80" alt="Dicroico tricolor">
+              </div>
+              <div class="card-details">
+                <span class="product-cat">Iluminación LED</span>
+                <h3 class="card-title">Dicroico c/base tricolor 7W 220V</h3>
+                <div class="card-price-row">
+                  <span class="price-val">S/ 12.00</span>
+                  <span class="igv-tag">inc. IGV</span>
+                </div>
+                <div class="card-meta">
+                  <span class="stock-status">✓ En stock</span>
+                  <span class="sku-tag">7W · 220V</span>
+                </div>
+                <a href="https://wa.me/51981144383?text=Hola,%20deseo%20cotizar:%20Dicroico%20tricolor" target="_blank" class="wsp-catalog-btn shiny-btn">
+                  <i data-lucide="message-circle"></i>
+                  <span>Cotizar por WhatsApp</span>
+                </a>
+              </div>
+            </article>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Botón Flotante WhatsApp -->
+  <a href="https://wa.me/51981144383" target="_blank" class="wsp-float-btn shiny-btn" aria-label="Contacto WhatsApp">
+    <i data-lucide="message-circle"></i>
+  </a>
+
+  <!-- PIE DE PÁGINA / FOOTER -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 Famavaya - Productos Premium. Todos los derechos reservados.</p>
+      <p>Cotizaciones instantáneas a través de WhatsApp.</p>
+    </div>
+  </footer>
+
+  <!-- Script JS --->
+  <script src="main.js"></script>
+</body>
+</html>
