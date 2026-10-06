@@ -93,7 +93,7 @@ body {
 
 .shiny-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(128, 61, 160, 0.35);
+  box-shadow: 0 6px 20px rgba(132, 63, 164, 0.35);
 }
 
 .wsp-float-btn {

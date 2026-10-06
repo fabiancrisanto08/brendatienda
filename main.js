@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ==========================================================================-
+  // ==========================================================================
   // 6. FILTRADO, BÚSQUEDA Y ORDENAMIENTO EN TIEMPO REAL
   // ==========================================================================
   const categoryCheckboxes = document.querySelectorAll('.category-checkbox');
