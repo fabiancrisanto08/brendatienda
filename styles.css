@@ -360,7 +360,7 @@ body {
 }
 
 /* ==========================================================================
-   6. HERO Y BOTONES PRINCIPALES (CORREGIDO)
+   6. HERO Y BOTONES PRINCIPALES
    ========================================================================== */
 .container {
   max-width: 1300px;
@@ -746,7 +746,7 @@ body {
 }
 
 /* ==========================================================================
-   8. MODAL DETALLE DE PRODUCTO
+   8. MODAL DETALLE DE PRODUCTO (VALORES CORREGIDOS)
    ========================================================================== */
 .product-modal {
   position: fixed;
@@ -765,7 +765,7 @@ body {
 
 .product-modal.active {
   opacity: 1;
-  pointer-events: all;
+  pointer-events: auto; /* Corrección de compatibilidad CSS */
 }
 
 .modal-overlay {

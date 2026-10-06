@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================================================
-  // 5. MODAL INTERACTIVO DE DETALLE DE PRODUCTO
+  // 5. MODAL INTERACTIVO DE DETALLE DE PRODUCTO (LÓGICA MEJORADA)
   // ==========================================================================
   const productModal = document.getElementById('productModal');
   const modalOverlay = document.getElementById('modalOverlay');
@@ -132,9 +132,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let currentProduct = { name: '', price: 0 };
 
-  // Abrir Modal al hacer clic en cualquier tarjeta
+  // Abrir Modal al hacer clic en cualquier tarjeta o botón interno de detalle
   document.querySelectorAll('.catalog-card').forEach(card => {
-    card.addEventListener('click', () => {
+    card.addEventListener('click', (e) => {
+      // Ignorar el evento si se hace clic en enlaces que no pertenecen al modal
+      if (e.target.closest('a') && !e.target.closest('.modal-wsp-link')) return;
+
       const title = card.querySelector('.card-title')?.textContent || 'Producto';
       const priceText = card.querySelector('.price-val')?.textContent || 'S/ 0.00';
       const priceNum = parseFloat(card.getAttribute('data-price')) || 0;
@@ -314,4 +317,3 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
-
