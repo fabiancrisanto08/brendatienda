@@ -26,20 +26,20 @@
 }
 
 /* ==========================================================================
-   2. ADAPTACIÓN A MODO OSCURO (PREFERENCIA DEL DISPOSITIVO)
+   2. ADAPTACIÓN A MODO OSCURO AUTOMÁTICO (PREFERENCIA DEL SISTEMA)
    ========================================================================== */
 @media (prefers-color-scheme: dark) {
   :root {
-    --primary-purple: #A855F7;        /* Morado con más brillo para alto contraste */
-    --purple-light: #2E1065;         /* Fondo oscuro para etiquetas/badges */
+    --primary-purple: #A855F7;        /* Morado de alto contraste */
+    --purple-light: #2E1065;         /* Fondo oscuro para badges */
     --purple-dark: #C084FC;          
     
-    --bg-gray: #0F172A;              /* Fondo de página oscuro profundo (Slate 900) */
-    --bg-card: #1E293B;              /* Fondo de tarjetas (Slate 800) */
+    --bg-gray: #0F172A;              /* Fondo de página principal */
+    --bg-card: #1E293B;              /* Tarjetas */
     
-    --gray-dark: #F8FAFC;            /* Textos principales en blanco suave */
-    --gray-medium: #94A3B8;          /* Textos secundarios en gris legible */
-    --gray-border: #334155;          /* Bordes de contraste sutil */
+    --gray-dark: #F8FAFC;            /* Títulos en blanco suave */
+    --gray-medium: #94A3B8;          /* Subtítulos claros */
+    --gray-border: #334155;          /* Bordes discretos */
 
     --white: #FFFFFF;
     --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
@@ -55,7 +55,6 @@
     border-bottom: 1px solid #334155;
   }
 
-  /* Formulario de búsqueda e Inputs */
   .search-form {
     background-color: #1E293B;
     border-color: #334155;
@@ -76,14 +75,14 @@
     border-color: #334155;
   }
 
-  /* Botones secundarios y de limpieza de filtro */
+  /* Botones del Hero en Modo Oscuro */
   .btn-secondary {
-    border-color: #334155;
-    color: #F8FAFC;
+    border-color: #334155 !important;
+    color: #F8FAFC !important;
   }
 
   .btn-secondary:hover {
-    background-color: #334155;
+    background-color: #334155 !important;
   }
 
   .btn-clear {
@@ -96,7 +95,6 @@
     color: #F8FAFC;
   }
 
-  /* Etiqueta SKU e imagen miniatura */
   .sku-tag {
     background-color: #334155;
     color: #CBD5E1;
@@ -106,20 +104,25 @@
     background-color: #0F172A;
   }
 
-  /* FOOTER COMPLETO EN MODO OSCURO */
+  .modal-container {
+    background-color: #1E293B;
+    border-color: #334155;
+  }
+
+  .qty-btn {
+    background-color: #0F172A;
+    color: #F8FAFC;
+  }
+
+  /* Footer en Modo Oscuro */
   .footer {
-    background-color: #020617 !important; /* Fondo ultra oscuro */
-    color: #94A3B8 !important;            /* Texto secundario claro */
-    border-top: 1px solid #1E293B;        /* Separador visual sutil */
+    background-color: #020617 !important;
+    color: #94A3B8 !important;
+    border-top: 1px solid #1E293B;
   }
 
   .footer p {
     color: #94A3B8 !important;
-  }
-
-  .footer strong, 
-  .footer a {
-    color: #F8FAFC !important;
   }
 }
 
@@ -149,7 +152,6 @@ body {
   color: var(--gray-dark);
 }
 
-/* Canvas para Fondo Dinámico Animado */
 #bg-canvas {
   position: fixed;
   top: 0;
@@ -358,7 +360,7 @@ body {
 }
 
 /* ==========================================================================
-   6. HERO Y SECCIONES GENERALES
+   6. HERO Y BOTONES PRINCIPALES (CORREGIDO)
    ========================================================================== */
 .container {
   max-width: 1300px;
@@ -367,7 +369,7 @@ body {
 }
 
 .hero-section {
-  padding: 5rem 0;
+  padding: 5rem 0 4rem;
   text-align: center;
 }
 
@@ -382,33 +384,47 @@ body {
   font-size: 1.25rem;
   color: var(--gray-medium);
   max-width: 800px;
-  margin: 0 auto 2rem;
+  margin: 0 auto 2.5rem;
 }
 
 .hero-buttons {
   display: flex;
   justify-content: center;
-  gap: 1rem;
+  align-items: center;
+  gap: 1.2rem;
 }
 
 .btn-primary {
-  background-color: var(--primary-purple);
-  color: var(--white);
-  padding: 0.8rem 1.8rem;
+  background-color: var(--primary-purple) !important;
+  color: var(--white) !important;
+  padding: 0.85rem 2rem;
   border-radius: 28px;
   text-decoration: none;
   font-weight: 700;
+  font-size: 1.05rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(128, 61, 160, 0.3);
 }
 
 .btn-secondary {
   background-color: transparent;
-  border: 2px solid var(--gray-border);
-  color: var(--gray-dark);
-  padding: 0.8rem 1.8rem;
+  border: 2px solid var(--gray-border) !important;
+  color: var(--gray-dark) !important;
+  padding: 0.85rem 2rem;
   border-radius: 28px;
   text-decoration: none;
   font-weight: 700;
+  font-size: 1.05rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background-color: var(--gray-border);
 }
 
 .section-title {
@@ -475,7 +491,6 @@ body {
   align-items: start;
 }
 
-/* SIDEBAR FILTROS */
 .store-sidebar {
   background-color: var(--bg-card);
   border: 1px solid var(--gray-border);
@@ -576,7 +591,6 @@ body {
   color: var(--gray-medium);
 }
 
-/* BARRA SUPERIOR TIENDA */
 .store-top-bar {
   display: flex;
   justify-content: space-between;
@@ -610,7 +624,6 @@ body {
   gap: 1.8rem;
 }
 
-/* TARJETAS DE CATÁLOGO */
 .catalog-card {
   background-color: var(--bg-card);
   border: 1px solid var(--gray-border);
@@ -619,6 +632,7 @@ body {
   box-shadow: var(--shadow-lg);
   display: flex;
   flex-direction: column;
+  cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
 }
 
@@ -713,23 +727,251 @@ body {
   color: var(--gray-medium);
 }
 
-.wsp-catalog-btn {
+.wsp-catalog-btn,
+.open-modal-btn {
   margin-top: auto;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  background-color: var(--whatsapp-green);
-  color: var(--white);
-  text-decoration: none;
-  padding: 0.65rem 1rem;
+  background-color: var(--primary-purple) !important;
+  color: var(--white) !important;
+  border: none;
+  padding: 0.75rem 1rem;
   border-radius: 12px;
   font-weight: 700;
   font-size: 0.95rem;
+  cursor: pointer;
+  width: 100%;
 }
 
 /* ==========================================================================
-   8. FOOTER Y CURSOR GLOW
+   8. MODAL DETALLE DE PRODUCTO
+   ========================================================================== */
+.product-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.product-modal.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+}
+
+.modal-container {
+  position: relative;
+  background-color: var(--bg-card);
+  width: 90%;
+  max-width: 900px;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 20px;
+  border: 1px solid var(--gray-border);
+  box-shadow: var(--shadow-lg);
+  padding: 2.5rem 2rem 2rem;
+  z-index: 2;
+  transform: translateY(20px);
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.product-modal.active .modal-container {
+  transform: translateY(0);
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1.2rem;
+  background: transparent;
+  border: none;
+  font-size: 2.2rem;
+  color: var(--gray-medium);
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.2s ease;
+}
+
+.modal-close-btn:hover {
+  color: var(--primary-purple);
+}
+
+.modal-body {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+.modal-main-image {
+  width: 100%;
+  height: 350px;
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: var(--gray-border);
+}
+
+.modal-main-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.modal-brand {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  color: var(--primary-purple);
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.modal-title {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--gray-dark);
+  margin: 0.2rem 0 0.2rem;
+  line-height: 1.25;
+}
+
+.modal-sku-tag {
+  display: inline-block;
+  font-size: 0.85rem;
+  color: var(--gray-medium);
+  margin-bottom: 1rem;
+}
+
+.modal-price-box {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid var(--gray-border);
+}
+
+.modal-price {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: var(--gray-dark);
+}
+
+.modal-igv-tag {
+  font-size: 0.9rem;
+  color: var(--gray-medium);
+  font-weight: 600;
+}
+
+.modal-description {
+  color: var(--gray-medium);
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.modal-specs {
+  background-color: rgba(0,0,0,0.03);
+  padding: 1rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--gray-border);
+}
+
+.specs-title {
+  font-size: 0.95rem;
+  color: var(--gray-dark);
+  margin-bottom: 0.6rem;
+  font-weight: 700;
+}
+
+.specs-list {
+  list-style: none;
+  font-size: 0.9rem;
+  color: var(--gray-medium);
+}
+
+.specs-list li {
+  margin-bottom: 0.4rem;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px dashed var(--gray-border);
+  padding-bottom: 0.2rem;
+}
+
+.specs-list li:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.modal-actions-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.quantity-selector {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--gray-border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.qty-btn {
+  background-color: var(--bg-gray);
+  border: none;
+  width: 42px;
+  height: 42px;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--gray-dark);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.qty-btn:hover {
+  background-color: var(--purple-light);
+  color: var(--primary-purple);
+}
+
+.quantity-selector input {
+  width: 48px;
+  height: 42px;
+  border: none;
+  text-align: center;
+  font-size: 1.05rem;
+  font-weight: 800;
+  background: transparent;
+  color: var(--gray-dark);
+}
+
+.modal-wsp-link {
+  flex-grow: 1;
+  background-color: var(--whatsapp-green) !important;
+  color: var(--white) !important;
+  text-decoration: none;
+}
+
+/* ==========================================================================
+   9. FOOTER Y CURSOR GLOW
    ========================================================================== */
 .footer {
   background-color: var(--gray-dark);
@@ -757,9 +999,7 @@ body {
   will-change: transform;
 }
 
-/* ==========================================================================
-   9. RESPONSIVIDAD (MEDIA QUERIES)
-   ========================================================================== */
+/* RESPONSIVIDAD */
 @media screen and (max-width: 992px) {
   .store-layout {
     grid-template-columns: 1fr;
@@ -781,6 +1021,14 @@ body {
   .header-actions { flex-direction: column; width: 100%; }
   .search-form, .wsp-btn { width: 100%; justify-content: center; }
 
+  .hero-buttons { flex-direction: column; width: 100%; }
+  .btn-primary, .btn-secondary { width: 100%; }
+
   .catalog-grid { grid-template-columns: 1fr; }
   .cursor-glow { display: none; }
+
+  .modal-body { grid-template-columns: 1fr; gap: 1.5rem; }
+  .modal-main-image { height: 220px; }
+  .modal-actions-row { flex-direction: column; }
+  .quantity-selector, .modal-wsp-link { width: 100%; justify-content: center; }
 }

@@ -87,7 +87,7 @@
       <!-- Header del Catálogo -->
       <header class="store-header">
         <h1 class="store-title" id="heroTitle">Catálogo de Productos</h1>
-        <p class="store-subtitle">Precios con IGV incluido. Cotización instantánea vía WhatsApp.</p>
+        <p class="store-subtitle">Precios con IGV incluido. Haz clic en cualquier producto para ver sus especificaciones y cotizar.</p>
       </header>
 
       <!-- Layout: Sidebar + Galería -->
@@ -143,11 +143,17 @@
             </select>
           </div>
 
-          <!-- GRID DE PRODUCTOS -->
+          <!-- GRID DE PRODUCTOS ENRIQUECIDOS PARA MODAL -->
           <div class="catalog-grid" id="productsGrid">
             
             <!-- Item 1 -->
-            <article class="catalog-card" data-category="electricos" data-price="235.00">
+            <article class="catalog-card" 
+                     data-category="electricos" 
+                     data-price="235.00"
+                     data-brand="Indeco"
+                     data-sku="TW80-12"
+                     data-description="Cable eléctrico TW80 Plus calibre 12 Indeco de alta conductividad y resistencia térmica. Ideal para instalaciones residenciales y comerciales de alto rendimiento."
+                     data-specs='{"Marca":"Indeco","Calibre":"#12 AWG","Uso":"Instalaciones eléctricas residenciales","Garantía":"1 año de fábrica","Material":"Cobre libre de impurezas"}'>
               <div class="card-thumb">
                 <span class="badge-discount">-13%</span>
                 <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=500&q=80" alt="Cable TW80">
@@ -163,15 +169,21 @@
                   <span class="stock-status">✓ En stock</span>
                   <span class="sku-tag">#12</span>
                 </div>
-                <a href="https://wa.me/51981144383?text=Hola,%20deseo%20cotizar:%20Cable%20TW80%20Plus" target="_blank" class="wsp-catalog-btn shiny-btn">
-                  <i data-lucide="message-circle"></i>
-                  <span>Cotizar por WhatsApp</span>
-                </a>
+                <button type="button" class="wsp-catalog-btn shiny-btn open-modal-btn">
+                  <i data-lucide="eye"></i>
+                  <span>Ver Detalle</span>
+                </button>
               </div>
             </article>
 
             <!-- Item 2 -->
-            <article class="catalog-card" data-category="seguridad" data-price="10.00">
+            <article class="catalog-card" 
+                     data-category="seguridad" 
+                     data-price="100.00"
+                     data-brand="SafetyPro"
+                     data-sku="CINT-ANT-01"
+                     data-description="Cinta antideslizante bicolor de alta adherencia para pisos, escaleras y zonas de alto tránsito industrial o residencial. Resistente a líquidos y fricción extrema."
+                     data-specs='{"Marca":"SafetyPro","Ancho":"2 pulgadas","Largo":"18 metros","Color":"Amarillo / Negro","Superficie":"Grano abrasivo premium"}'>
               <div class="card-thumb">
                 <img src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=500&q=80" alt="Cinta antideslizante">
               </div>
@@ -185,15 +197,21 @@
                 <div class="card-meta">
                   <span class="stock-status">✓ En stock</span>
                 </div>
-                <a href="https://wa.me/51981144383?text=Hola,%20deseo%20cotizar:%20Cinta%20antideslizante" target="_blank" class="wsp-catalog-btn shiny-btn">
-                  <i data-lucide="message-circle"></i>
-                  <span>Cotizar por WhatsApp</span>
-                </a>
+                <button type="button" class="wsp-catalog-btn shiny-btn open-modal-btn">
+                  <i data-lucide="eye"></i>
+                  <span>Ver Detalle</span>
+                </button>
               </div>
             </article>
 
             <!-- Item 3 -->
-            <article class="catalog-card" data-category="iluminacion" data-price="12.00">
+            <article class="catalog-card" 
+                     data-category="iluminacion" 
+                     data-price="12.00"
+                     data-brand="LedLux"
+                     data-sku="DIC-L3110"
+                     data-description="Foco dicroico LED L3110 con socket base incluido. Consume solo 7W con potencia equivalente a 50W halógeno. Ahorro energético garantizado."
+                     data-specs='{"Marca":"LedLux","Potencia":"7W","Voltaje":"220V","Base":"GU10 / Incluida","Vida útil":"25,000 horas"}'>
               <div class="card-thumb">
                 <img src="https://images.unsplash.com/photo-1550985616-10810253b84d?auto=format&fit=crop&w=500&q=80" alt="Dicroico c/base">
               </div>
@@ -208,15 +226,21 @@
                   <span class="stock-status">✓ En stock</span>
                   <span class="sku-tag">7W · 220V</span>
                 </div>
-                <a href="https://wa.me/51981144383?text=Hola,%20deseo%20cotizar:%20Dicroico%20L3110" target="_blank" class="wsp-catalog-btn shiny-btn">
-                  <i data-lucide="message-circle"></i>
-                  <span>Cotizar por WhatsApp</span>
-                </a>
+                <button type="button" class="wsp-catalog-btn shiny-btn open-modal-btn">
+                  <i data-lucide="eye"></i>
+                  <span>Ver Detalle</span>
+                </button>
               </div>
             </article>
 
             <!-- Item 4 -->
-            <article class="catalog-card" data-category="iluminacion" data-price="12.00">
+            <article class="catalog-card" 
+                     data-category="iluminacion" 
+                     data-price="12.00"
+                     data-brand="LedLux"
+                     data-sku="DIC-TRI-7W"
+                     data-description="Dicroico LED tricolor inteligente. Cambia entre Luz Cálida, Neutra y Fría simplemente apagando y encendiendo el interruptor tradicional."
+                     data-specs='{"Marca":"LedLux","Modos":"3 Temperaturas de luz","Potencia":"7W","Voltaje":"220V","Garantía":"6 meses"}'>
               <div class="card-thumb">
                 <img src="https://images.unsplash.com/photo-1507499739999-097706ad8914?auto=format&fit=crop&w=500&q=80" alt="Dicroico tricolor">
               </div>
@@ -231,10 +255,10 @@
                   <span class="stock-status">✓ En stock</span>
                   <span class="sku-tag">7W · 220V</span>
                 </div>
-                <a href="https://wa.me/51981144383?text=Hola,%20deseo%20cotizar:%20Dicroico%20tricolor" target="_blank" class="wsp-catalog-btn shiny-btn">
-                  <i data-lucide="message-circle"></i>
-                  <span>Cotizar por WhatsApp</span>
-                </a>
+                <button type="button" class="wsp-catalog-btn shiny-btn open-modal-btn">
+                  <i data-lucide="eye"></i>
+                  <span>Ver Detalle</span>
+                </button>
               </div>
             </article>
 
@@ -243,6 +267,53 @@
       </div>
     </div>
   </main>
+
+  <!-- MODAL DE DETALLE DE PRODUCTO -->
+  <div class="product-modal" id="productModal" aria-hidden="true" role="dialog">
+    <div class="modal-overlay" id="modalOverlay"></div>
+    <div class="modal-container">
+      <button class="modal-close-btn" id="modalCloseBtn" aria-label="Cerrar modal">&times;</button>
+      
+      <div class="modal-body">
+        <div class="modal-gallery">
+          <div class="modal-main-image">
+            <img id="modalImg" src="" alt="Producto Famavaya">
+          </div>
+        </div>
+
+        <div class="modal-info">
+          <span class="modal-brand" id="modalBrand">Famavaya Premium</span>
+          <h2 class="modal-title" id="modalTitle">Título del Producto</h2>
+          <span class="modal-sku-tag" id="modalSku">SKU: --</span>
+          
+          <div class="modal-price-box">
+            <span class="modal-price" id="modalPrice">S/ 0.00</span>
+            <span class="modal-igv-tag">inc. IGV</span>
+          </div>
+
+          <p class="modal-description" id="modalDescription">Descripción detallada del producto.</p>
+
+          <div class="modal-specs">
+            <h4 class="specs-title">Características principales:</h4>
+            <ul class="specs-list" id="modalSpecs"></ul>
+          </div>
+
+          <div class="modal-actions-row">
+            <div class="quantity-selector">
+              <button class="qty-btn" id="qtyMinus" type="button">-</button>
+              <input type="number" id="qtyInput" value="1" min="1" readonly>
+              <button class="qty-btn" id="qtyPlus" type="button">+</button>
+            </div>
+
+            <a href="#" id="modalWspBtn" target="_blank" rel="noopener noreferrer" class="wsp-catalog-btn shiny-btn modal-wsp-link">
+              <i data-lucide="message-circle"></i>
+              <span>Cotizar por WhatsApp</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Botón Flotante WhatsApp -->
   <a href="https://wa.me/51981144383" target="_blank" class="wsp-float-btn shiny-btn" aria-label="Contacto WhatsApp">
@@ -257,7 +328,7 @@
     </div>
   </footer>
 
-  <!-- Script JS --->
+  <!-- Script JS -->
   <script src="main.js"></script>
 </body>
 </html>

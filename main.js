@@ -10,6 +10,9 @@ document.addEventListener('DOMContentLoaded', () => {
     gsap.registerPlugin(ScrollTrigger);
   }
 
+  // Detección de preferencia de Modo Oscuro del sistema
+  const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
   // ==========================================================================
   // 3. FONDO ANIMADO CON PARTÍCULAS EN MOVIMIENTO
   // ==========================================================================
@@ -32,8 +35,17 @@ document.addEventListener('DOMContentLoaded', () => {
         this.size = Math.random() * 4 + 1;
         this.speedX = Math.random() * 1.5 - 0.75;
         this.speedY = Math.random() * 1.5 - 0.75;
-        this.color = 'rgba(128, 61, 160, ' + (Math.random() * 0.3 + 0.1) + ')';
+        this.resetColor();
       }
+
+      resetColor() {
+        const isDark = darkModeMediaQuery.matches;
+        const alpha = Math.random() * 0.3 + 0.15;
+        this.color = isDark 
+          ? `rgba(168, 85, 247, ${alpha})` 
+          : `rgba(128, 61, 160, ${alpha})`;
+      }
+
       update() {
         this.x += this.speedX;
         this.y += this.speedY;
@@ -44,6 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (this.y > canvas.height) this.y = 0;
         else if (this.y < 0) this.y = canvas.height;
       }
+
       draw() {
         ctx.fillStyle = this.color;
         ctx.beginPath();
@@ -70,6 +83,10 @@ document.addEventListener('DOMContentLoaded', () => {
       requestAnimationFrame(animateCanvas);
     }
     animateCanvas();
+
+    darkModeMediaQuery.addEventListener('change', () => {
+      particlesArray.forEach(particle => particle.resetColor());
+    });
   }
 
   // ==========================================================================
@@ -94,45 +111,115 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================================================
-  // 5. ANIMACIONES GSAP & EFECTO TILT 3D EN TARJETAS
+  // 5. MODAL INTERACTIVO DE DETALLE DE PRODUCTO
   // ==========================================================================
-  if (document.getElementById('heroTitle')) {
-    gsap.from('#heroTitle', { opacity: 0, y: 30, duration: 1, ease: 'power3.out' });
-  }
+  const productModal = document.getElementById('productModal');
+  const modalOverlay = document.getElementById('modalOverlay');
+  const modalCloseBtn = document.getElementById('modalCloseBtn');
 
-  const catalogCards = document.querySelectorAll('.catalog-card');
+  const modalImg = document.getElementById('modalImg');
+  const modalBrand = document.getElementById('modalBrand');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalSku = document.getElementById('modalSku');
+  const modalPrice = document.getElementById('modalPrice');
+  const modalDescription = document.getElementById('modalDescription');
+  const modalSpecs = document.getElementById('modalSpecs');
+  
+  const qtyInput = document.getElementById('qtyInput');
+  const qtyMinus = document.getElementById('qtyMinus');
+  const qtyPlus = document.getElementById('qtyPlus');
+  const modalWspBtn = document.getElementById('modalWspBtn');
 
-  catalogCards.forEach((card) => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
+  let currentProduct = { name: '', price: 0 };
 
-      const rotateX = ((y - centerY) / centerY) * -8;
-      const rotateY = ((x - centerX) / centerX) * 8;
+  // Abrir Modal al hacer clic en cualquier tarjeta
+  document.querySelectorAll('.catalog-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const title = card.querySelector('.card-title')?.textContent || 'Producto';
+      const priceText = card.querySelector('.price-val')?.textContent || 'S/ 0.00';
+      const priceNum = parseFloat(card.getAttribute('data-price')) || 0;
+      const img = card.querySelector('.card-thumb img')?.src || '';
+      
+      const brand = card.getAttribute('data-brand') || 'Famavaya Premium';
+      const sku = card.getAttribute('data-sku') || 'SKU-001';
+      const description = card.getAttribute('data-description') || 'Producto de alta calidad garantizado por Famavaya.';
+      
+      let specs = {};
+      try {
+        specs = JSON.parse(card.getAttribute('data-specs') || '{}');
+      } catch (err) {
+        specs = { "Categoría": "General" };
+      }
 
-      gsap.to(card, {
-        rotateX: rotateX,
-        rotateY: rotateY,
-        transformPerspective: 1000,
-        boxShadow: '0 15px 30px rgba(0,0,0,0.15)',
-        duration: 0.3,
-        ease: 'power1.out'
-      });
-    });
+      currentProduct = { name: title, price: priceNum };
 
-    card.addEventListener('mouseleave', () => {
-      gsap.to(card, {
-        rotateX: 0,
-        rotateY: 0,
-        boxShadow: '0 10px 25px -5px rgba(0,0,0,0.1)',
-        duration: 0.5,
-        ease: 'power2.out'
-      });
+      // Llenar datos en el modal
+      if (modalImg) modalImg.src = img;
+      if (modalBrand) modalBrand.textContent = brand;
+      if (modalTitle) modalTitle.textContent = title;
+      if (modalSku) modalSku.textContent = `SKU: ${sku}`;
+      if (modalPrice) modalPrice.textContent = priceText;
+      if (modalDescription) modalDescription.textContent = description;
+      if (qtyInput) qtyInput.value = 1;
+
+      // Generar lista de especificaciones técnicas
+      if (modalSpecs) {
+        modalSpecs.innerHTML = '';
+        Object.entries(specs).forEach(([key, val]) => {
+          const li = document.createElement('li');
+          li.innerHTML = `<strong>${key}:</strong> <span>${val}</span>`;
+          modalSpecs.appendChild(li);
+        });
+      }
+
+      updateModalWspLink();
+
+      // Mostrar Modal
+      if (productModal) {
+        productModal.classList.add('active');
+        productModal.setAttribute('aria-hidden', 'false');
+      }
     });
   });
+
+  // Controles de cantidad (+ / -)
+  if (qtyMinus && qtyPlus && qtyInput) {
+    qtyMinus.addEventListener('click', (e) => {
+      e.stopPropagation();
+      let val = parseInt(qtyInput.value) || 1;
+      if (val > 1) {
+        qtyInput.value = val - 1;
+        updateModalWspLink();
+      }
+    });
+
+    qtyPlus.addEventListener('click', (e) => {
+      e.stopPropagation();
+      let val = parseInt(qtyInput.value) || 1;
+      qtyInput.value = val + 1;
+      updateModalWspLink();
+    });
+  }
+
+  // Actualización dinámica de URL de WhatsApp
+  function updateModalWspLink() {
+    if (!modalWspBtn) return;
+    const qty = qtyInput ? parseInt(qtyInput.value) || 1 : 1;
+    const total = (currentProduct.price * qty).toFixed(2);
+    const message = `Hola Famavaya, deseo cotizar: ${currentProduct.name} (Cantidad: ${qty}) - Total aprox: S/ ${total} (inc. IGV)`;
+    modalWspBtn.href = `https://wa.me/51981144383?text=${encodeURIComponent(message)}`;
+  }
+
+  // Cerrar Modal
+  function closeModal() {
+    if (productModal) {
+      productModal.classList.remove('active');
+      productModal.setAttribute('aria-hidden', 'true');
+    }
+  }
+
+  if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);
+  if (modalOverlay) modalOverlay.addEventListener('click', closeModal);
 
   // ==========================================================================
   // 6. FILTRADO, BÚSQUEDA Y ORDENAMIENTO EN TIEMPO REAL
@@ -146,6 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const searchForm = document.getElementById('searchForm');
   const sortSelect = document.getElementById('sortSelect');
   const productsCount = document.getElementById('productsCount');
+  const catalogCards = document.querySelectorAll('.catalog-card');
 
   function filterProducts() {
     const selectedCategories = Array.from(categoryCheckboxes)
@@ -188,7 +276,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Escuchadores de eventos
   categoryCheckboxes.forEach((cb) => cb.addEventListener('change', filterProducts));
   if (applyBtn) applyBtn.addEventListener('click', filterProducts);
 
@@ -210,7 +297,6 @@ document.addEventListener('DOMContentLoaded', () => {
     searchForm.addEventListener('submit', (e) => e.preventDefault());
   }
 
-  // Ordenamiento dinámico
   if (sortSelect) {
     sortSelect.addEventListener('change', () => {
       const grid = document.getElementById('productsGrid');
@@ -229,58 +315,4 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// Detectamos si el usuario usa modo oscuro
-const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-// En la función Particle, ajustamos el color según el modo:
-class Particle {
-  constructor() {
-    this.x = Math.random() * canvas.width;
-    this.y = Math.random() * canvas.height;
-    this.size = Math.random() * 4 + 1;
-    this.speedX = Math.random() * 1.5 - 0.75;
-    this.speedY = Math.random() * 1.5 - 0.75;
-    
-    // Color según modo claro / oscuro
-    const alpha = Math.random() * 0.3 + 0.15;
-    this.color = isDarkMode 
-      ? `rgba(192, 132, 252, ${alpha})`   // Morado brillante para modo oscuro
-      : `rgba(128, 61, 160, ${alpha})`;    // Morado estándar para modo claro
-  }
-  
-  update() {
-    this.x += this.speedX;
-    this.y += this.speedY;
-
-    if (this.x > canvas.width) this.x = 0;
-    else if (this.x < 0) this.x = canvas.width;
-
-    if (this.y > canvas.height) this.y = 0;
-    else if (this.y < 0) this.y = canvas.height;
-  }
-
-  draw() {
-    ctx.fillStyle = this.color;
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fill();
-  }
-}
-
-function animateCanvas() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  
-  // Fondo degradado responsivo al tema
-  if (isDarkMode) {
-    canvas.style.background = 'linear-gradient(135deg, #0f172a 0%, #1e102f 100%)';
-  } else {
-    canvas.style.background = 'linear-gradient(135deg, #f8fafc 0%, #f3e8ff 100%)';
-  }
-
-  for (let i = 0; i < particlesArray.length; i++) {
-    particlesArray[i].update();
-    particlesArray[i].draw();
-  }
-  requestAnimationFrame(animateCanvas);
-}
 
