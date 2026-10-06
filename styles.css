@@ -1,5 +1,5 @@
 /* ==========================================================================
-   1. VARIABLES Y CONFIGURACIÓN GENERAL
+   1. VARIABLES Y CONFIGURACIÓN GENERAL (TEMA CLARO DEFAULT)
    ========================================================================== */
 :root {
   --primary-purple: #803DA0;
@@ -9,8 +9,8 @@
   --bg-gray: #F8FAFC;
   --bg-card: rgba(255, 255, 255, 0.95);
   
-  --gray-dark: #2B2D42;
-  --gray-medium: #4A5568;
+  --gray-dark: #1E293B;
+  --gray-medium: #475569;
   --gray-border: #E2E8F0;
 
   --white: #FFFFFF;
@@ -20,8 +20,112 @@
   --font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
   --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+
+  --canvas-bg: linear-gradient(135deg, #f8fafc 0%, #f3e8ff 100%);
+  --glow-color: rgba(128, 61, 160, 0.3);
 }
 
+/* ==========================================================================
+   2. ADAPTACIÓN A MODO OSCURO (PREFERENCIA DEL DISPOSITIVO)
+   ========================================================================== */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary-purple: #A855F7;        /* Morado con más brillo para alto contraste */
+    --purple-light: #2E1065;         /* Fondo oscuro para etiquetas/badges */
+    --purple-dark: #C084FC;          
+    
+    --bg-gray: #0F172A;              /* Fondo de página oscuro profundo (Slate 900) */
+    --bg-card: #1E293B;              /* Fondo de tarjetas (Slate 800) */
+    
+    --gray-dark: #F8FAFC;            /* Textos principales en blanco suave */
+    --gray-medium: #94A3B8;          /* Textos secundarios en gris legible */
+    --gray-border: #334155;          /* Bordes de contraste sutil */
+
+    --white: #FFFFFF;
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.5);
+
+    --canvas-bg: linear-gradient(135deg, #0f172a 0%, #170b29 100%);
+    --glow-color: rgba(168, 85, 247, 0.25);
+  }
+
+  /* Header en Modo Oscuro */
+  .header {
+    background-color: rgba(15, 23, 42, 0.9) !important;
+    border-bottom: 1px solid #334155;
+  }
+
+  /* Formulario de búsqueda e Inputs */
+  .search-form {
+    background-color: #1E293B;
+    border-color: #334155;
+  }
+
+  .search-input {
+    color: #F8FAFC;
+  }
+
+  .search-input::placeholder {
+    color: #94A3B8;
+  }
+
+  .price-input, 
+  .sort-select {
+    background-color: #0F172A;
+    color: #F8FAFC;
+    border-color: #334155;
+  }
+
+  /* Botones secundarios y de limpieza de filtro */
+  .btn-secondary {
+    border-color: #334155;
+    color: #F8FAFC;
+  }
+
+  .btn-secondary:hover {
+    background-color: #334155;
+  }
+
+  .btn-clear {
+    color: #94A3B8;
+    border-color: #334155;
+  }
+
+  .btn-clear:hover {
+    background-color: #334155;
+    color: #F8FAFC;
+  }
+
+  /* Etiqueta SKU e imagen miniatura */
+  .sku-tag {
+    background-color: #334155;
+    color: #CBD5E1;
+  }
+
+  .card-thumb {
+    background-color: #0F172A;
+  }
+
+  /* FOOTER COMPLETO EN MODO OSCURO */
+  .footer {
+    background-color: #020617 !important; /* Fondo ultra oscuro */
+    color: #94A3B8 !important;            /* Texto secundario claro */
+    border-top: 1px solid #1E293B;        /* Separador visual sutil */
+  }
+
+  .footer p {
+    color: #94A3B8 !important;
+  }
+
+  .footer strong, 
+  .footer a {
+    color: #F8FAFC !important;
+  }
+}
+
+/* ==========================================================================
+   3. RESETS Y ESTILOS BASE
+   ========================================================================== */
 * {
   margin: 0;
   padding: 0;
@@ -34,12 +138,15 @@ html {
   color: var(--gray-dark);
   background-color: var(--bg-gray);
   font-size: 16px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 body {
   line-height: 1.6;
   position: relative;
   overflow-x: hidden;
+  background-color: var(--bg-gray);
+  color: var(--gray-dark);
 }
 
 /* Canvas para Fondo Dinámico Animado */
@@ -51,7 +158,7 @@ body {
   height: 100vh;
   z-index: -1;
   pointer-events: none;
-  background: linear-gradient(135deg, #f8fafc 0%, #f3e8ff 100%);
+  background: var(--canvas-bg);
 }
 
 .icon-lg {
@@ -60,7 +167,7 @@ body {
 }
 
 /* ==========================================================================
-   2. BOTONES SHINY & FLOTANTES
+   4. BOTONES SHINY & FLOTANTES
    ========================================================================== */
 .shiny-btn {
   position: relative;
@@ -119,7 +226,7 @@ body {
 }
 
 /* ==========================================================================
-   3. ENCABEZADO / HEADER
+   5. ENCABEZADO / HEADER
    ========================================================================== */
 .header {
   position: sticky;
@@ -127,8 +234,9 @@ body {
   z-index: 1000;
   background-color: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(12px);
-  border-bottom: 2px solid var(--gray-border);
+  border-bottom: 1px solid var(--gray-border);
   box-shadow: var(--shadow-md);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .header-container {
@@ -176,6 +284,12 @@ body {
   font-size: 1.1rem;
   padding: 0.5rem 0;
   position: relative;
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--primary-purple);
 }
 
 .nav-link::after {
@@ -204,9 +318,10 @@ body {
   display: flex;
   align-items: center;
   background-color: var(--bg-gray);
-  border: 2px solid var(--gray-border);
+  border: 1px solid var(--gray-border);
   border-radius: 28px;
   padding: 0.35rem 1rem;
+  transition: all 0.3s ease;
 }
 
 .search-input {
@@ -243,7 +358,7 @@ body {
 }
 
 /* ==========================================================================
-   4. HERO Y SECCIONES GENERALES
+   6. HERO Y SECCIONES GENERALES
    ========================================================================== */
 .container {
   max-width: 1300px;
@@ -293,6 +408,7 @@ body {
   border-radius: 28px;
   text-decoration: none;
   font-weight: 700;
+  transition: all 0.2s ease;
 }
 
 .section-title {
@@ -300,6 +416,7 @@ body {
   font-weight: 800;
   margin-bottom: 2rem;
   text-align: center;
+  color: var(--gray-dark);
 }
 
 .featured-section, .about-section {
@@ -315,7 +432,7 @@ body {
 }
 
 /* ==========================================================================
-   5. TIENDA Y CATALOGO LAYOUT
+   7. TIENDA Y CATÁLOGO LAYOUT
    ========================================================================== */
 .store-section {
   padding: 2.5rem 0 4.5rem;
@@ -367,6 +484,7 @@ body {
   box-shadow: var(--shadow-md);
   position: sticky;
   top: 100px;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .filter-group {
@@ -428,6 +546,8 @@ body {
   border: 1px solid var(--gray-border);
   border-radius: 8px;
   outline: none;
+  background-color: var(--bg-card);
+  color: var(--gray-dark);
 }
 
 .btn-sidebar {
@@ -447,17 +567,13 @@ body {
 }
 
 .btn-apply:hover {
-  background-color: var(--purple-dark);
+  opacity: 0.9;
 }
 
 .btn-clear {
   background-color: transparent;
   border: 1px solid var(--gray-border);
   color: var(--gray-medium);
-}
-
-.btn-clear:hover {
-  background-color: var(--gray-border);
 }
 
 /* BARRA SUPERIOR TIENDA */
@@ -470,6 +586,7 @@ body {
   padding: 1rem 1.5rem;
   border-radius: 12px;
   border: 1px solid var(--gray-border);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .products-count {
@@ -482,7 +599,8 @@ body {
   border-radius: 8px;
   border: 1px solid var(--gray-border);
   outline: none;
-  background-color: var(--white);
+  background-color: var(--bg-card);
+  color: var(--gray-dark);
   font-weight: 600;
 }
 
@@ -492,7 +610,7 @@ body {
   gap: 1.8rem;
 }
 
-/* TARJETAS DE CATALOGO */
+/* TARJETAS DE CATÁLOGO */
 .catalog-card {
   background-color: var(--bg-card);
   border: 1px solid var(--gray-border);
@@ -501,7 +619,7 @@ body {
   box-shadow: var(--shadow-lg);
   display: flex;
   flex-direction: column;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .card-thumb {
@@ -610,8 +728,8 @@ body {
   font-size: 0.95rem;
 }
 
-/* ==========================================================================-
-   6. FOOTER Y CURSOR GLOW
+/* ==========================================================================
+   8. FOOTER Y CURSOR GLOW
    ========================================================================== */
 .footer {
   background-color: var(--gray-dark);
@@ -620,6 +738,7 @@ body {
   text-align: center;
   font-size: 0.95rem;
   margin-top: 3rem;
+  transition: background-color 0.3s ease;
 }
 
 .cursor-glow {
@@ -629,7 +748,7 @@ body {
   width: 350px;
   height: 350px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(128, 61, 160, 0.3) 0%, rgba(128, 61, 160, 0.1) 45%, rgba(0,0,0,0) 70%);
+  background: radial-gradient(circle, var(--glow-color) 0%, rgba(128, 61, 160, 0.05) 45%, rgba(0,0,0,0) 70%);
   pointer-events: none;
   z-index: 9999;
   transform: translate(-50%, -50%);
@@ -638,7 +757,9 @@ body {
   will-change: transform;
 }
 
-/* RESPONSIVIDAD */
+/* ==========================================================================
+   9. RESPONSIVIDAD (MEDIA QUERIES)
+   ========================================================================== */
 @media screen and (max-width: 992px) {
   .store-layout {
     grid-template-columns: 1fr;
@@ -662,56 +783,4 @@ body {
 
   .catalog-grid { grid-template-columns: 1fr; }
   .cursor-glow { display: none; }
-}
-
-/* ==========================================================================
-   ADAPTACIÓN A MODO OSCURO (SYSTEM PREFERENCE)
-   ========================================================================== */
-@media (prefers-color-scheme: dark) {
-  :root {
-    /* Paleta oscura adaptada */
-    --bg-gray: #0F172A;            /* Fondo principal oscuro (Slate 900) */
-    --bg-card: rgba(30, 41, 59, 0.90); /* Tarjetas semi-transparentes oscuras */
-    
-    --gray-dark: #F8FAFC;          /* Textos principales a blanco/gris claro */
-    --gray-medium: #94A3B8;        /* Textos secundarios a gris medio claro */
-    --gray-border: #334155;        /* Bordes más discretos para fondo oscuro */
-
-    --purple-light: #3B0764;       /* Fondo morado suave para etiquetas */
-    --primary-purple: #C084FC;     /* Morado más brillante para contraste */
-  }
-
-  /* Ajuste de sombras en modo oscuro */
-  :root {
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
-    --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.6);
-  }
-
-  /* Header y Barra superior en modo oscuro */
-  .header {
-    background-color: rgba(15, 23, 42, 0.85) !important;
-    border-bottom: 1px solid var(--gray-border);
-  }
-
-  .sort-select {
-    background-color: #1E293B;
-    color: var(--gray-dark);
-  }
-
-  .price-input {
-    background-color: #1E293B;
-    color: var(--gray-dark);
-    border-color: var(--gray-border);
-  }
-
-  /* Ajuste de miniatura cuando no hay imagen cargada */
-  .card-thumb {
-    background-color: #1E293B;
-  }
-
-  /* Footer en modo oscuro */
-  .footer {
-    background-color: #020617;
-    border-top: 1px solid var(--gray-border);
-  }
 }

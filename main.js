@@ -284,6 +284,3 @@ function animateCanvas() {
   requestAnimationFrame(animateCanvas);
 }
 
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-    location.reload(); // Re-inicializa partículas y estilos dinámicos
-});
