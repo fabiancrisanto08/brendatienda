@@ -663,3 +663,55 @@ body {
   .catalog-grid { grid-template-columns: 1fr; }
   .cursor-glow { display: none; }
 }
+
+/* ==========================================================================
+   ADAPTACIÓN A MODO OSCURO (SYSTEM PREFERENCE)
+   ========================================================================== */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Paleta oscura adaptada */
+    --bg-gray: #0F172A;            /* Fondo principal oscuro (Slate 900) */
+    --bg-card: rgba(30, 41, 59, 0.90); /* Tarjetas semi-transparentes oscuras */
+    
+    --gray-dark: #F8FAFC;          /* Textos principales a blanco/gris claro */
+    --gray-medium: #94A3B8;        /* Textos secundarios a gris medio claro */
+    --gray-border: #334155;        /* Bordes más discretos para fondo oscuro */
+
+    --purple-light: #3B0764;       /* Fondo morado suave para etiquetas */
+    --primary-purple: #C084FC;     /* Morado más brillante para contraste */
+  }
+
+  /* Ajuste de sombras en modo oscuro */
+  :root {
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.6);
+  }
+
+  /* Header y Barra superior en modo oscuro */
+  .header {
+    background-color: rgba(15, 23, 42, 0.85) !important;
+    border-bottom: 1px solid var(--gray-border);
+  }
+
+  .sort-select {
+    background-color: #1E293B;
+    color: var(--gray-dark);
+  }
+
+  .price-input {
+    background-color: #1E293B;
+    color: var(--gray-dark);
+    border-color: var(--gray-border);
+  }
+
+  /* Ajuste de miniatura cuando no hay imagen cargada */
+  .card-thumb {
+    background-color: #1E293B;
+  }
+
+  /* Footer en modo oscuro */
+  .footer {
+    background-color: #020617;
+    border-top: 1px solid var(--gray-border);
+  }
+}
